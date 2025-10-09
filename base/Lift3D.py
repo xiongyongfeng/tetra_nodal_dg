@@ -38,7 +38,7 @@ def lift_3d(N, Np, Nfaces, Nfp, r, s, t, Fmask, V):
         V2D = vandermonde_2d(N, faceR, faceS)
         mass_iface = np.linalg.inv(V2D @ V2D.T)
         if iface == 0:
-            mass_iface = mass_iface * 1.0
+            mass_iface = mass_iface * np.sqrt(3.0)
         Emat[indices, iface * Nfp : (iface + 1) * Nfp] = mass_iface
 
     # inv(mass matrix)*\I_n(L_i,L_j)_{edge_n}

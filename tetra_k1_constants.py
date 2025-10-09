@@ -4,6 +4,7 @@ from base.print_format import suppress_small
 from base.Vandermonde3D import simplex_3d_p
 from base.Lift3D import lift_3d
 from base.Dmatrices3D import dmatrices_3d
+from base.SpaceInterpolateCoef import space_interpolate_coef
 
 
 def tetra_k1_constants():
@@ -54,6 +55,9 @@ def tetra_k1_constants():
     print(f"Ds =\n {Ds}")
     print(f"Dt =\n {Dt}")
 
+    C = space_interpolate_coef(N, r, s, t)
+    print(f"space_interpolate_coef_matrix = \n{C}")
+
     Fmask = [
         [1, 2, 3],
         [0, 3, 2],
@@ -71,6 +75,6 @@ def tetra_k1_constants():
 
 if __name__ == "__main__":
     np.set_printoptions(
-        formatter={"float": lambda x: f"{suppress_small(x):.3f}"}, suppress=True
+        formatter={"float": lambda x: f"{suppress_small(x):.20f}"}, suppress=True
     )
     tetra_k1_constants()

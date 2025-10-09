@@ -5,20 +5,21 @@ from base.Vandermonde3D import simplex_3d_p
 from base.print_format import suppress_small
 from base.Dmatrices3D import dmatrices_3d
 from base.Lift3D import lift_3d
+from base.SpaceInterpolateCoef import space_interpolate_coef
 
 
 def tetra_k2_constants():
     points_lists = [
-        [-1, -1, -1],
-        [1, -1, -1],
-        [-1, 1, -1],
-        [-1, -1, 1],
-        [0, -1, -1],
-        [0, 0, -1],
-        [-1, 0, -1],
-        [0, -1, 0],
-        [-1, 0, 0],
-        [-1, -1, 0],
+        [-1, -1, -1],  # point 0
+        [1, -1, -1],  # point 1
+        [-1, 1, -1],  # point 2
+        [-1, -1, 1],  # point 3
+        [0, -1, -1],  # point 4, midpoint of edge (0,1)
+        [0, 0, -1],  # point 5, midpoint of edge (1,2)
+        [-1, 0, -1],  # point 6, midpoint of edge (0,2)
+        [-1, -1, 0],  # point 7, midpoint of edge (0,3)
+        [0, -1, 0],  # point 8, midpoint of edge (1,3)
+        [-1, 0, 0],  # point 9, midpoint of edge (2,3)
     ]  # how to get lgl points of  higher order
     N = 2  # K2 element
 
@@ -56,23 +57,26 @@ def tetra_k2_constants():
     print(f"Ds =\n {Ds}")
     print(f"Dt =\n {Dt}")
 
-    # Fmask = [
-    #     [1, 2, 3],
-    #     [0, 3, 2],
-    #     [0, 1, 3],
-    #     [0, 2, 1],
-    # ]  # 定义了iface中ifp与isp的映射关系
-    # Nsp = (N + 1) * (N + 2) * (N + 3) // 6  # 每个单元的点数（示例）
-    # Nfaces = 4  # 面数
-    # Nfp = (N + 1) * (N + 2) // 2  # 每个面的点数（示例）
+    C = space_interpolate_coef(N, r, s, t)
+    print(f"space_interpolate_coef_matrix = \n{C}")
+
+    Fmask = [
+        [1, 2, 3, 5, 9, 8],
+        [0, 3, 2, 7, 9, 6],
+        [0, 1, 3, 4, 8, 7],
+        [0, 2, 1, 6, 5, 4],
+    ]  # 定义了iface中ifp与isp的映射关系
+    Nsp = (N + 1) * (N + 2) * (N + 3) // 6  # 每个单元的点数（示例）
+    Nfaces = 4  # 面数
+    Nfp = (N + 1) * (N + 2) // 2  # 每个面的点数（示例）
     # # 需要先定义 r, s, Fmask, V 等参数
-    # LIFT = lift_3d(N, Nsp, Nfaces, Nfp, r, s, t, Fmask, V3D)
-    # print(f"LIFT =\n {LIFT}")
+    LIFT = lift_3d(N, Nsp, Nfaces, Nfp, r, s, t, Fmask, V3D)
+    print(f"LIFT =\n {LIFT}")
 
 
 if __name__ == "__main__":
     # np.set_printoptions(precision=3)
     np.set_printoptions(
-        formatter={"float": lambda x: f"{suppress_small(x):.2f}"}, suppress=True
+        formatter={"float": lambda x: f"{suppress_small(x):.20f}"}, suppress=True
     )
     tetra_k2_constants()
