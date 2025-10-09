@@ -155,3 +155,5 @@ data/
 instance/
 config.local.py
 secrets.json
+
+*.png

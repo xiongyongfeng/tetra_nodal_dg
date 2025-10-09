@@ -29,23 +29,3 @@ def jacobi_gl(alpha, beta, N):
 
 # 注意：此函数依赖于之前实现的 jacobi_gq 函数
 # 以下是完整的实现示例，包含 jacobi_gq 函数
-
-
-# 示例使用
-if __name__ == "__main__":
-    # 测试 JacobiGL 函数
-    alpha, beta, N = 0, 0, 4  # 对应 Legendre 多项式
-    x_gl = jacobi_gl(alpha, beta, N)
-
-    print("Gauss-Lobatto 求积点 (x):", x_gl)
-
-    # 绘制这些点
-    # import matplotlib.pyplot as plt
-
-    # plt.figure(figsize=(10, 2))
-    # plt.plot(x_gl, np.zeros_like(x_gl), "o", markersize=8)
-    # plt.title(f"Jacobi-Gauss-Lobatto 点 (N={N}, α={alpha}, β={beta})")
-    # plt.xlim(-1.1, 1.1)
-    # plt.yticks([])
-    # plt.grid(True, alpha=0.3)
-    # plt.show()
