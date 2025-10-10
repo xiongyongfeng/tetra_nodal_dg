@@ -4,7 +4,10 @@ from base.print_format import suppress_small
 from base.Vandermonde3D import simplex_3d_p
 from base.Lift3D import lift_3d
 from base.Dmatrices3D import dmatrices_3d
-from base.SpaceInterpolateCoef import space_interpolate_coef
+from base.SpaceInterpolateCoef import (
+    space_interpolate_coef,
+    grad_space_interpolate_coef,
+)
 
 
 def tetra_k1_constants():
@@ -57,6 +60,11 @@ def tetra_k1_constants():
 
     C = space_interpolate_coef(N, r, s, t)
     print(f"space_interpolate_coef_matrix = \n{C}")
+
+    Cr, Cs, Ct = grad_space_interpolate_coef(N, r, s, t)
+    print(f"grad_interpolate_coef_matrix_r = \n{Cr}")
+    print(f"grad_interpolate_coef_matrix_s = \n{Cs}")
+    print(f"grad_interpolate_coef_matrix_t = \n{Ct}")
 
     Fmask = [
         [1, 2, 3],
