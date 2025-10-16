@@ -11,6 +11,32 @@ from base.SpaceInterpolateCoef import (
 )
 
 
+def p2(x, y, z):
+    return (
+        x
+        + 2 * y
+        + 3 * z
+        + 4 * x * x
+        + 5 * y * y
+        + 6 * z * z
+        + 7 * x * y
+        + 8 * x * z
+        + 9 * y * z
+    )
+
+
+def dp2dx(x, y, z):
+    return 1 + 8 * x + 7 * y + 8 * z
+
+
+def dp2dy(x, y, z):
+    return 2 + 10 * y + 7 * x + 9 * z
+
+
+def dp2dz(x, y, z):
+    return 3 + 12 * z + 8 * x + 9 * y
+
+
 def tetra_k2_constants():
     points_lists = [
         [-1, -1, -1],  # point 0
@@ -81,10 +107,16 @@ def tetra_k2_constants():
     LIFT = lift_3d(N, Nsp, Nfaces, Nfp, r, s, t, Fmask, V3D)
     print(f"LIFT =\n {LIFT}")
 
+    u = p2(r, s, t)
+    dudx = Dr @ u
+    dudx_golden = dp2dx(r, s, t)
+    print(f"dudx={dudx}")
+    print(f"dudx_golden={dudx_golden}")
+
 
 if __name__ == "__main__":
     # np.set_printoptions(precision=3)
     np.set_printoptions(
-        formatter={"float": lambda x: f"{suppress_small(x):.20f}"}, suppress=True
+        formatter={"float": lambda x: f"{suppress_small(x):.2f}"}, suppress=True
     )
     tetra_k2_constants()
